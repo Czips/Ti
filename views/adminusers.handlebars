@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="../assets/css/image-picker.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../assets/js/admin.js"></script>
+<script src="../assets/js/image-picker.js"></script>
+<script type="text/javascript" src="/js/moment.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css" />
+
+{{#each users}}
+   <div class="user" style="padding: 10px; background: #a70000;" id={{username}} onclick="show(this)">
+   <a style="color: white; text-decoration: none;">{{username}}</a></div>
+   <div class="user_btn" style="padding: 10px; background: #a70000;" id={{username}}_btn>
+    <button type="button" class="btn" style="float:right; padding: 3px; margin-right: 3px;" onclick="ReloadFunction(this)" id="{{username}}">Reload</button>
+    <button type="button" class="btn" style="float:right; padding: 3px; margin-right: 3px;" onclick="PauseFunction(this)" id="{{username}}">Pause</button>
+    <button type="button" id="{{username}}" class="btn" style="float:right; padding: 3px; margin-right: 3px;" onclick="OpenFilesBrowser(this)">Add Image</button>
+   </div>
+   <div class="user_wrap" id="{{username}}_wrap" style="display:none; height: auto;" >
+  {{#each images}}
+  <div class="container" style="margin-bottom: 3px;"> 
+  <img HEIGHT=100 WIDTH=100 src="{{#if start}}../public/{{image}}{{else}}../public/{{this}}{{/if}}" style="float: left;"> 
+    <div class='col-md-4'>
+    Start date:
+        <div class="form-group">
+            <div class='input-group date' id='{{../username}}{{@index}}_start' data-value="{{../username}}" onclick="OpenDatePicker(this)">
+                <input type='text' class="form-control" value="{{#if start}}{{start}}{{else}} Not Defined {{/if}}"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-md-4'>
+    End date:
+        <div class="form-group">
+            <div class='input-group date' id='{{../username}}{{@index}}_end' onclick="OpenDatePicker(this)">
+                <input type='text' class="form-control" value="{{#if start}}{{start}}{{else}} Not Defined {{/if}}"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+<button type="button" class="btn btn-default" style="float: right; margin-top: 20px; margin-right: 50px;" onclick="SaveDateToUser(this)" id="{{../username}}{{@index}}" value="{{this}}">Save</button>
+	</div>
+    {{/each}}
+   </div>
+{{/each}}
+
+
+<div id="image_popup" style="display: none; width: auto; height: 400px; overflow: auto; background: gray;">
+  <input type="hidden" id="user" value="null" >
+    <div rel="title">
+        Add image to user...
+    </div>
+    <div rel="body">
+        <div style="padding: 10; width: auto; font-size: 11px;">
+
+      <select id="picker" multiple="multiple" class="image-picker show-html">
+
+      {{#each aimages}}
+        <option data-img-src='../public/{{filename}}'' value="{{filename}}" />
+      {{/each}}
+
+      </select>
+        </div>
+    </div>
+    <div rel="buttons">
+        <button class="btn" onclick="UpdateUser()">Done</button>
+    </div>
+</div>

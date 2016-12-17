@@ -1,0 +1,83 @@
+ <link rel="stylesheet" href="../assets/css/image-picker.css" />
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../assets/js/admin.js"></script>
+<script src="../assets/js/image-picker.js"></script>
+
+
+<div style="padding: 10px; background: red; margin-bottom: 10px;">
+<form method="post">
+	<input type="text" name="groupname">
+	<input type="submit" class="btn btn-default" value="Create Group">
+</form>
+</div>
+
+<div style="padding: 10px; background: red; margin-bottom: 10px;">
+<form method="post" action="groups/add">
+	
+<a>User:</a>
+	<select name="usertoadd">
+	{{#each users}}
+		<option value={{username}}>{{username}}</option>
+	{{/each}}
+	</select>
+
+<a>Group:</a>
+	<select name="grouptoadd">
+	{{#each groups}}
+		<option value={{gname}}>{{gname}}</option>
+	{{/each}}
+	</select>
+
+	<input type="submit" class="btn btn-default" value="Add to Group">
+</form>
+</div>
+
+
+
+
+{{#each groups}}
+
+<div style="padding: 11px; background: gray; width: 90%; float:left; margin-bottom: 10px; height: auto;" onclick="show(this)" id={{gname}}>
+<a style="margin-top: 5px;  ">{{gname}}</a>
+</div>
+<div style="padding: 10px; background: gray	; width: 10%; float:right;" id={{username}}_btn>
+    <button type="button" id="{{gname}}" class="btn" style="float:right; padding: 0px; margin-right: 0px;" onclick="OpenFilesBrowser(this)">Add Images</button>
+</div>
+<div id="{{gname}}_wrap" style="padding: 0px;display: none; height: auto;">
+{{#each gmembers}}
+<div style="padding: 10px; background: #a70000; margin-bottom: 5px; width: 20%;" id={{this}}>
+<a>{{this}}</a>
+</div>
+{{/each}}
+
+    {{#each gimages}}
+   <img HEIGHT=100 WIDTH=100 src=../public/{{this}} style="margin-bottom: 10px;">
+    {{/each}}
+
+</div>
+{{/each}}
+
+
+<div id="image_popup" style="display: none; width: auto; height: 400px; overflow: auto; background: gray;">
+  <input type="hidden" id="user" value="null" >
+    <div rel="title">
+        Add image to user...
+    </div>
+    <div rel="body">
+        <div style="padding: 10; width: auto; font-size: 11px;">
+
+      <select id="picker" multiple="multiple" class="image-picker show-html">
+
+      {{#each aimages}}
+        <option data-img-src='../public/{{filename}}'' value="{{filename}}" />
+      {{/each}}
+
+      </select>
+        </div>
+    </div>
+    <div rel="buttons">
+        <button class="btn" onclick="UpdateGroup()">Done</button>
+    </div>
+</div>
