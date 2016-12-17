@@ -102,7 +102,10 @@ app.start = app.listen = function(){
   return server.listen.apply(server, arguments)
 }
 
-app.start(server_port,server_ip_address);
+app.start(server_port,server_ip_address, function(){
+  console.log('%s: Node server started on %s:%d ...',
+                        Date(Date.now() ), server_ip_address, server_port);
+});
 
 
 
