@@ -25,6 +25,7 @@
     "passport-local": "*",
     "shortid": "*",
     "multer": "*",
-    "gridfs-stream": "*"
+    "gridfs-stream": "*",
+    "socket.io": "*"
   }
 }
