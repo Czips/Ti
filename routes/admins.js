@@ -40,7 +40,7 @@ router.get('/users',ensureAuthenticated, function(req,res){
 					}
 				}
 			}
-				res.render('adminUsers',{users:result, aimages:images});
+				res.render('adminusers',{users:result, aimages:images});
 			});
 	});
 	});
