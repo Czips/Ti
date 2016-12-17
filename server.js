@@ -90,22 +90,14 @@ app.use('/admin', admins);
 
 // Set Port
 
-//app.set('port', (process.env.PORT || 3000));
-
-//app.listen(app.get('port'), function(){
-//	console.log('Server started on port '+app.get('port'));
-//});
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 app.start = app.listen = function(){
   return server.listen.apply(server, arguments)
 }
-
-app.start(server_port,server_ip_address, function(){
-  console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), server_ip_address, server_port);
-});
+console.log(server_ip_address, server_port);
+app.start(server_port, server_ip_address);
 
 
 
@@ -117,7 +109,7 @@ var User = require('./models/user');
 var image = require('./models/image');
 var connections = {};
 
-console.log('Server started on port 3000');
+
 var presentation = io.on('connection', function (socket) {
 
   
