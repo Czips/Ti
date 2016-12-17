@@ -95,13 +95,14 @@ app.use('/admin', admins);
 //app.listen(app.get('port'), function(){
 //	console.log('Server started on port '+app.get('port'));
 //});
-
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 app.start = app.listen = function(){
   return server.listen.apply(server, arguments)
 }
 
-app.start(80)
+app.start(server_port,server_ip_address);
 
 
 
