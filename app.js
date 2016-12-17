@@ -12,7 +12,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var shortid = require('shortid');
 
-mongoose.connect('mongodb://localhost/TIdatabase');
+mongoose.connect('mongodb://userKST:XqkhALEqVH2uNy6G@mongodb/TIdatabase');
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
@@ -101,7 +101,7 @@ app.start = app.listen = function(){
   return server.listen.apply(server, arguments)
 }
 
-app.start(3000)
+app.start(80)
 
 
 
